@@ -1,1 +1,1 @@
-Web: wedding-API
+web: wedding-API
