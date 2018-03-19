@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	. "wedding-API/config"
 	. "wedding-API/dao"
@@ -66,10 +68,15 @@ func init() {
 }
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3001"
+	}
 	r := mux.NewRouter()
 	r.HandleFunc("/guests", AllGuestsEndPoint).Methods("GET")
 	r.HandleFunc("/guests", CreateGuestEndPoint).Methods("POST")
-	if err := http.ListenAndServe(":3001", r); err != nil {
+	fmt.Println("running on Port" + port)
+	if err := http.ListenAndServe(":"+port, r); err != nil {
 		log.Fatal(err)
 	}
 }
